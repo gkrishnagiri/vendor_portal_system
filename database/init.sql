@@ -1,0 +1,1 @@
+CREATE DATABASE vendor_invoicing_db;
