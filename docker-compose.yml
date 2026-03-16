@@ -5,23 +5,38 @@ services:
   postgres:
     image: postgres:15
     container_name: vendor_portal_postgres
+    restart: always
+
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: audit_user
+      POSTGRES_PASSWORD: audit_user@123
       POSTGRES_DB: vendor_invoicing_db
+
     ports:
       - "5433:5432"
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database:/docker-entrypoint-initdb.d
 
+
   backend:
     build: ./backend
     container_name: vendor_portal_backend
+
     ports:
       - "8000:8000"
+
     depends_on:
       - postgres
+
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: vendor_invoicing_db
+      DATABASE_USER: audit_user
+      DATABASE_PASSWORD: audit_user@123
+
 
 volumes:
   postgres_data:
