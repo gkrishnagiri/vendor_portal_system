@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.test_db import router as test_db_router
 from app.api.vendors import router as vendors_router
@@ -10,6 +11,15 @@ app = FastAPI(
     title="Vendor Portal System",
     description="Vendor Invoice Processing Portal",
     version="1.0.0"
+)
+
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # allow all for now
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(test_db_router)

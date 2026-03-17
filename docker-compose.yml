@@ -35,5 +35,16 @@ services:
       - .env
 
 
+  frontend:
+    build: ./frontend/vendor-ui
+    container_name: vendor_portal_frontend
+
+    ports:
+      - "3000:3000"
+
+    depends_on:
+      - backend
+
+
 volumes:
   postgres_data:
