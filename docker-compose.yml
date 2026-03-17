@@ -5,10 +5,13 @@ services:
     container_name: vendor_portal_postgres
     restart: always
 
+    env_file:
+      - .env
+
     environment:
-      POSTGRES_USER: audit_user
-      POSTGRES_PASSWORD: audit_user@123
-      POSTGRES_DB: vendor_invoicing_db
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
 
     ports:
       - "5433:5432"
@@ -28,12 +31,8 @@ services:
     depends_on:
       - postgres
 
-    environment:
-      DATABASE_HOST: postgres
-      DATABASE_PORT: 5432
-      DATABASE_NAME: vendor_invoicing_db
-      DATABASE_USER: audit_user
-      DATABASE_PASSWORD: audit_user@123
+    env_file:
+      - .env
 
 
 volumes:
